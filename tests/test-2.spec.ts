@@ -1,22 +1,45 @@
 import { test, expect } from '@playwright/test';
 
-test('login test', async ({ page }) => {
+test('Проверка отображения элементов в навигации хедера', async ({ page }) => {
   await page.goto('https://playwright.dev/');
   await expect(page).toHaveURL('https://playwright.dev/');
   await expect(page.getByRole('link', { name: 'Playwright logo Playwright' })).toBeVisible();
-  await page.waitForTimeout(5000);
-
-  //проверка докс
-  await page.getByRole('link', { name: 'Docs' }).click();
+  await page.waitForTimeout(1000);
   await expect(page.getByRole('link', { name: 'Docs' })).toBeVisible();
-  await expect(page).toHaveURL('https://playwright.dev/docs/intro');
-  await page.waitForTimeout(5000);
-  // проверка апи
-  await page.getByRole('link', { name: 'API', exact: true }).click();
-  await expect(page.getByRole('link', { name: 'API', exact: true })).toBeVisible();
-  await expect(page).toHaveURL('https://playwright.dev/docs/api/class-playwright');
-  await page.waitForTimeout(5000);
+  await expect(page.getByRole('link', { name: 'API' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Node.js' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Community' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'GitHub repository' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Discord server' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Switch between dark and light' })).toBeVisible();
+});
 
-  await page.getByRole('button', { name: 'Node.js' }).click();
-  await page.getByRole('link', { name: 'Java' }).click();
+test('Проверка названия элементов в навигации хедера', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+  await expect(page.getByRole('link', { name: 'Playwright logo Playwright' })).toContainText(
+    'Playwright',
+  );
+  await expect(page.getByRole('link', { name: 'Docs' })).toContainText('Docs');
+  await expect(page.getByRole('link', { name: 'API' })).toContainText('API');
+  await expect(page.getByRole('button', { name: 'Node.js' })).toContainText('Node.js');
+  await expect(page.getByRole('link', { name: 'Community' })).toContainText('Community');
+});
+
+test('Проверка атрибутов href элементов в навигации хедера', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+
+  await expect(page.getByRole('link', { name: 'Playwright logo Playwright' })).toHaveAttribute(
+    'href',
+    '/',
+  );
+  await expect(page.getByRole('link', { name: 'Docs' })).toHaveAttribute('href', '/docs/intro');
+  await expect(page.getByRole('link', { name: 'API' })).toHaveAttribute(
+    'href',
+    '/docs/api/class-playwright',
+  );
+  await expect(page.getByRole('button', { name: 'Node.js' })).toHaveAttribute('href', '#');
+  await expect(page.getByRole('link', { name: 'Community' })).toHaveAttribute(
+    'href',
+    '/community/welcome',
+  );
 });
