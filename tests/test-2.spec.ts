@@ -66,7 +66,7 @@ test('Проверка заголовка старницы', async ({ page }) =>
   ).toContainText('Playwright enables reliable end-to-end testing for modern web apps.');
 });
 
-test('Проверка кнопки старницы', async ({ page }) => {
+test('Проверка кнопки Get started', async ({ page }) => {
   await page.goto('https://playwright.dev/');
   await expect(page.getByRole('link', { name: 'Get started' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Get started' })).toHaveAttribute(
